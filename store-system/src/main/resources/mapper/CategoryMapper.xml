@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.CategoryMapper">
+
+    <resultMap id="getCategoryVO"
+               type="cn.ykd.store.system.pojo.vo.CategoryStandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parent_id"/>
+        <result column="depth" property="depth"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="icon" property="icon"/>
+        <result column="enable" property="enable"/>
+        <result column="is_parent" property="is_parent"/>
+        <result column="is_display" property="is_display"/>
+    </resultMap>
+
+    <resultMap id="getCategorylistVO"
+               type="cn.ykd.store.system.pojo.vo.CategoryListitemVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parent_id"/>
+        <result column="depth" property="depth"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="icon" property="icon"/>
+        <result column="enable" property="enable"/>
+        <result column="is_parent" property="is_parent"/>
+        <result column="is_display" property="is_display"/>
+    </resultMap>
+
+    <sql id="ListResultFields">
+        <if test="true">
+            id,  name, parent_id, depth, keywords, sort, icon, enable, is_parent, is_display
+        </if>
+    </sql>
+
+
+    <!--    int insert(Brand_category brand_category);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_category (
+            name, parent_id, depth, keywords, sort, icon, enable, is_parent, is_display
+        )VALUES (
+             #{name},#{parent_id},#{depth},#{keywords},#{sort},#{icon},#{enable},#{is_parent},#{is_display}
+                )
+    </insert>
+
+    <!--    int insertBatch(List<Brand_category> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_category(
+        name, parent_id, depth, keywords, sort, icon, enable, is_parent, is_display
+        )VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.name},#{item.parent_id},#{item.depth},#{item.keywords},#{item.sort},
+             #{item.icon},#{item.enable},#{item.is_parent},#{item.is_display}
+            )
+        </foreach>
+    </insert>
+
+    <!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM  pms_category where id = #{id}
+    </delete>
+
+    <!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE  FROM  pms_category WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--    int update(Category category);-->
+    <update id="update">
+        UPDATE pms_category
+            <set>
+                <if test="name != null">
+                    name=#{name},
+                </if>
+                <if test="parent_id != null">
+                    parent_id=#{parent_id},
+                </if>
+                <if test="depth != null">
+                    depth=#{depth},
+                </if>
+                <if test="keywords != null">
+                    keywords=#{keywords},
+                </if>
+                <if test="sort != null">
+                    sort=#{sort},
+                </if>
+                <if test="icon != null">
+                    icon=#{icon},
+                </if>
+                <if test="enable != null">
+                    enable=#{enable},
+                </if>
+                <if test="is_parent != null">
+                    is_parent=#{is_parent},
+                </if>
+                <if test="is_display != null">
+                    is_display=#{is_display},
+                </if>
+
+            </set>
+        WHERE
+        id=#{id}
+    </update>
+
+
+
+<!--    int count();-->
+<select id="count" resultType="int">
+    SELECT count(*) from pms_category
+</select>
+
+
+<!--    int countByName(String name);-->
+    <select id="countByName" resultType="int">
+        SELECT count(*) FROM pms_category where name=#{name}
+    </select>
+
+<!--    int countByParentId(Long parent_id);-->
+    <select id="countByParentId" resultType="int">
+        SELECT count(*) FROM pms_category where parent_id=#{parent_id}
+    </select>
+
+
+<!--    CategoryStandardVO getCategoryStandardById(Long id)-->
+    <select id="getCategoryStandardById"  resultMap="getCategoryVO">
+        SELECT
+            <include refid="ListResultFields"/>
+        FROM
+             pms_category
+        WHERE
+              id = #{id}
+    </select>
+
+<!--    List<CategoryListitemVO> list();-->
+        <select id="list" resultMap="getCategorylistVO">
+            SELECT
+                <include refid="ListResultFields"></include>
+            FROM
+                pms_category
+        </select>
+
+<!--    List<CategoryListitemVO> listByParent_id(Long parent_id);-->
+    <select id="listByParent_id" resultMap="getCategorylistVO">
+        SELECT
+                <include refid="ListResultFields"></include>
+        From
+             pms_category
+        where parent_id = #{parent_id}
+    </select>
+
+
+</mapper>

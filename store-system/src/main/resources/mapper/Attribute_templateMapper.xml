@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.Attribute_templateMapper">
+
+    <resultMap id="attribute_templateSdandardVO"
+               type="cn.ykd.store.system.pojo.vo.Attribute_templateStandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pinyin" property="pinyin"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+
+    <!--int insert(Attribute_template attribute_template);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_attribute_template(
+             name, pinyin, keywords, sort
+        )values (
+                 #{name},#{pinyin},#{keywords},#{sort}
+                 )
+    </insert>
+
+
+<!--    int insertBatch(List<Attribute_template> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO  pms_attribute_template (name, pinyin, keywords, sort)
+        VALUES<foreach collection="list" item="attribute_template" separator=","> (
+                #{attribute_template.name},#{attribute_template.pinyin},
+                #{attribute_template.keywords},#{attribute_template.sort}
+                )</foreach>
+    </insert>
+
+    <!--    int deleteById(long id);-->
+    <delete id="deleteById">
+        DELETE FROM pms_attribute_template WHERE id=#{id}
+    </delete>
+
+<!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE FROM pms_attribute_template WHERE id IN(
+            <foreach collection="array" item="id" separator="," >
+                #{id}
+            </foreach>
+          )
+    </delete>
+
+<!--    int countByName(String name);-->
+    <select id="countByName" resultType="int">
+        select count(*) from pms_attribute_template where name=#{name}
+    </select>
+
+<!--    int update(Attribute_template attribute_template);-->
+    <update id="update">
+        UPDATE  pms_attribute_template
+        <set>
+            name=#{name},pinyin=#{pinyin},keywords=#{keywords},sort=#{sort}
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+<!--    Attribute_templateStandardVO getAttribute_template(Long id);-->
+    <select id="getAttribute_template"
+            resultMap="attribute_templateSdandardVO">
+        SELECT
+            id,name, pinyin, keywords, sort
+        FROM
+             pms_attribute_template
+        WHERE
+              id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 模块版本，是固定的 -->
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 父级项目 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- 当前项目的信息 -->
+    <groupId>cn.ykd</groupId>
+    <artifactId>store-system</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <!-- 属性配置 -->
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    <!-- 当前项目使用的依赖项 -->
+    <!-- 关于依赖项的版本：如果父级项目管理了某依赖项的版本，不建议配置版本，否则必须配置版本-->
+    <!-- scope标签的作用:配置此依赖项的作用域-->
+    <!-- scope标签的值为Test:此依赖项仅能用于src/test下，并且不会参与打包与部署 -->
+    <dependencies>
+        <!-- spring boot的基础依赖项-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- spring validation依赖项，用于检查请求参数的基本格式-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- spring boot test(测试)的依赖项-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- spring boot security(授权)的依赖项-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- mybatis整合spring boot的依赖项-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+        <!-- mysql的依赖项-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- lombok的依赖项,主要应用于pojo类的编写-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+
+<!--        knife4j的依赖性 在线api文挡 基于当前控制器类中的配置生成文档-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+        <!-- Spring Boot Security依赖项，用于处理认证与授权相关的问题 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <!-- JJWT（Java JWT） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <!-- fastjson：实现对象与JSON的相互转换 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
+
+        <!-- Spring Boot Data Redis依赖项，用于实现Redis编程 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+
+    <!-- 构建项目的配置 -->
+    <!-- 此标签的代码肯报错，有两个方法-->
+    <!-- 1:将整个build删除，对项目开发，运行都不会有影响-->
+    <!-- 2.在 artfactId标签下方添加version标签，显示的添加与父项目相同的版本号-->
+    <build>
+        <!-- 构建项目的涉及的相关插件 -->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.5.6</version>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+
+
+</project>

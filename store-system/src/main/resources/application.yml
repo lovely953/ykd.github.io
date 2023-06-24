@@ -1,0 +1,30 @@
+#主配置文件
+#激活profiles文件
+#spring相关配置
+spring:
+  #profile配置
+  profiles:
+    #激活那些profile配置
+    active: dev
+  #jackson框架的相关配置
+  jackson:
+    #用于配置此属性什么时候会包含在json结果中 non_null表示不为空
+    default-property-inclusion: non_null
+
+
+
+#knife4j配置
+knife4j:
+  #开启增强模式
+  enable: true
+  #屏蔽生成环境
+  production: false
+
+#mybatis的xml配置
+mybatis:
+  #配置xml的位置
+  mapper-locations: classpath:mapper/*.xml
+
+
+
+

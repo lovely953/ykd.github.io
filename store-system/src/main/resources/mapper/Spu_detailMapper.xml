@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.Spu_detailMapper">
+
+    <!--    int insert(Brand_category brand_category);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_spu_detail (
+            spu_id, detail
+        )VALUES (
+                    #{spu_id},#{detail}
+                )
+    </insert>
+
+    <!--    int insertBatch(List<Brand_category> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_spu_detail(
+        spu_id, detail
+        )VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.spu_id},#{item.detail}
+            )
+        </foreach>
+    </insert>
+
+    <!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM  pms_spu_detail where id = #{id}
+    </delete>
+
+    <!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE  FROM  pms_spu_detail WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--    int update(Spu_detail spu_detail);-->
+    <update id="update">
+        UPDATE pms_spu_detail
+            <set>
+                #{spu_id},#{detail}
+            </set>
+        WHERE
+        id=#{id}
+    </update>
+
+
+</mapper>

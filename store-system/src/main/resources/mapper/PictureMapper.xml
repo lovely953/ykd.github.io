@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.PictureMapper">
+
+    <!--    int insert(Brand_category brand_category);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_picture (
+            album_id, url, description, width, height, is_cover,sort
+        )VALUES (
+                #{album_id},#{url},#{description},#{width},#{height},#{is_cover},#{sort}
+                )
+    </insert>
+
+    <!--    int insertBatch(List<Brand_category> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_picture(
+        album_id, url, description, width, height, is_cover,sort
+        )VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.album_id},#{item.url},#{item.description},#{item.width},#{item.height},#{item.is_cover},#{item.sort}
+            )
+        </foreach>
+    </insert>
+
+    <!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM  pms_picture where id = #{id}
+    </delete>
+
+    <!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE  FROM  pms_picture WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--    int update(Picture picture);-->
+    <update id="update">
+        UPDATE pms_picture
+            <set>
+                #{album_id},#{url},#{description},#{width},#{height},#{is_cover},#{sort}
+            </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <!--    int countByAlbumId(Long album_id);-->
+    <select id="countByAlbumId" resultType="int" >
+        SELECT count(*) from pms_picture where album_id=#{album_id}
+    </select>
+
+
+</mapper>

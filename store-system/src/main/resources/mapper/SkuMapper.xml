@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.SkuMapper">
+
+    <!--    int insert(Brand_category brand_category);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_sku (
+            spu_id, title, bar_code, attribute_template_id, specifications, album_id,
+            pictures, price, stock, stock_threshold, sales, comment_count,
+            positive_comment_count, sort
+        )VALUES (
+            #{spu_id},#{title},#{bar_code},#{attribute_template_id},#{specifications},
+            #{album_id},#{pictures},#{price},#{stock},#{stock_threshold},#{sales},#{comment_count},
+            #{positive_comment_count},#{sort}
+                )
+    </insert>
+
+    <!--    int insertBatch(List<Brand_category> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_sku(
+        spu_id, title, bar_code, attribute_template_id, specifications, album_id,
+        pictures, price, stock, stock_threshold, sales, comment_count,
+        positive_comment_count, sort
+        )VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{ietm.spu_id},#{ietm.title},#{ietm.bar_code},#{ietm.attribute_template_id},
+            #{ietm.specifications},#{ietm.album_id},#{ietm.pictures},#{ietm.price},
+            #{ietm.stock},#{ietm.stock_threshold},#{ietm.sales},#{ietm.comment_count},
+            #{ietm.positive_comment_count},#{ietm.sort}
+            )
+        </foreach>
+    </insert>
+
+    <!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM  pms_sku where id = #{id}
+    </delete>
+
+    <!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE  FROM  pms_sku WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--    int update(Sku sku);-->
+    <update id="update">
+        UPDATE pms_sku
+            <set>
+                #{spu_id},#{title},#{bar_code},#{attribute_template_id},#{specifications},
+                #{album_id},#{pictures},#{price},#{stock},#{stock_threshold},#{sales},#{comment_count},
+                #{positive_comment_count},#{sort}
+            </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <!--    int countByAlbumId(Long album_id);-->
+    <select id="countByAlbumId" resultType="int">
+        SELECT count(*) FROM pms_sku where album_id =#{album_id}
+    </select>
+
+   
+
+</mapper>

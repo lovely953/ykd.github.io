@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.SpuMapper">
+
+    <!--    int insert(Brand_category brand_category);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_spu (
+            name, type_number, title, description, list_price, unit, brand_id,
+            brand_name, category_id, category_name, attribute_template_id, album_id,
+            pictures, keywords, tags,sales,comment_count,positive_comment_count,sort,
+            is_deleted,is_published,is_new_arrival,is_recommend,is_checked, check_user,
+            gmt_check
+
+        )VALUES (
+            #{name},#{type_number},#{title},#{description},#{list_price},#{unit},#{brand_id},
+            #{brand_name},#{category_id},#{category_name},#{attribute_template_id},#{album_id},
+            #{pictures},#{keywords},#{tags},#{sales},#{comment_count},#{positive_comment_count},
+            #{sort},#{is_deleted},#{is_published},#{is_new_arrival},#{is_recommend},
+            #{is_checked},#{check_user},#{gmt_check}
+                )
+    </insert>
+
+    <!--    int insertBatch(List<Brand_category> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_spu(
+        name, type_number, title, description, list_price, unit, brand_id,
+        brand_name, category_id, category_name, attribute_template_id, album_id,
+        pictures, keywords, tags,sales,comment_count,positive_comment_count,sort,
+        is_deleted,is_published,is_new_arrival,is_recommend,is_checked, check_user,
+        gmt_check
+        )VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.name},#{item.type_number},#{item.title},#{item.description},#{item.item.list_price},
+            #{item.unit},#{item.brand_id},#{item.brand_name},#{item.category_id},#{item.category_name},
+            #{item.attribute_template_id},#{item.album_id},#{item.pictures},#{item.keywords},#{item.tags},
+            #{item.sales},#{item.comment_count},#{item.positive_comment_count},#{item.sort},#{item.is_deleted},
+            #{item.is_published},#{item.is_new_arrival},#{item.is_recommend},
+            #{item.is_checked},#{item.check_user},#{item.gmt_check}
+            )
+        </foreach>
+    </insert>
+
+    <!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM  pms_spu where id = #{id}
+    </delete>
+
+    <!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE  FROM  pms_spu WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+<!--    int update(Spu spu);-->
+    <update id="update">
+        UPDATE pms_spu
+            <set>
+                #{name},#{type_number},#{title},#{description},#{list_price},#{unit},#{brand_id},
+                #{brand_name},#{category_id},#{category_name},#{attribute_template_id},#{album_id},
+                #{pictures},#{keywords},#{tags},#{sales},#{comment_count},#{positive_comment_count},
+                #{sort},#{is_deleted},#{is_published},#{is_new_arrival},#{is_recommend},
+                #{is_checked},#{check_user},#{gmt_check}
+            </set>
+        WHERE
+        id=#{id}
+    </update>
+
+<!--    int countByCategory(Long category_id);-->
+    <select id="countByCategory" resultType="int">
+        select count(*) from pms_spu where category_id =#{category_id}
+    </select>
+
+<!--    int countByAlbumId(Long album_id);-->
+    <select id="countByAlbumId" resultType="int">
+        SELECT count(*) FROM pms_spu where album_id =#{album_id}
+    </select>
+
+   
+
+</mapper>

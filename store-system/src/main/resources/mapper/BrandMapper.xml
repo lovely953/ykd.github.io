@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ykd.store.system.mapper.BrandMapper">
+
+    <resultMap id="brandStrandardVO"
+               type="cn.ykd.store.system.pojo.vo.BrandStrandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pinyin" property="pinyin"/>
+        <result column="logo" property="logo"/>
+        <result column="description" property="description"/>
+        <result column="keywors" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="product_count" property="product_count"/>
+        <result column="comment_count" property="comment_count"/>
+        <result column="positive_comment_count" property="positive_comment_count"/>
+        <result column="enable" property="enable"/>
+    </resultMap>
+
+    <!--    int insert(Brand_category brand_category);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_brand (
+           name, pinyin, logo, description, keywords, sort, sales, product_count, comment_count, positive_comment_count, enable
+        )VALUES (
+           #{name},#{pinyin}, #{logo}, #{description}, #{keywords}, #{sort}, #{sales}, #{product_count}, #{comment_count}, #{positive_comment_count}, #{enable}
+                )
+    </insert>
+
+    <!--    int insertBatch(List<Brand_category> list);-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_brand(
+        name, pinyin, logo, description, keywords, sort, sales, product_count, comment_count, positive_comment_count, enable
+        )VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.name},#{item.pinyin}, #{item.logo}, #{item.description}, #{item.keywords}, #{item.sort}, #{item.sales}, #{item.product_count},
+             #{item.comment_count}, #{item.positive_comment_count}, #{item.enable}
+            )
+        </foreach>
+    </insert>
+
+    <!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM  pms_brand where id = #{id}
+    </delete>
+
+    <!--    int deleteByIds(Long[] ids);-->
+    <delete id="deleteByIds">
+        DELETE  FROM  pms_brand WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+<!--    int update(Brand brand);-->
+    <update id="update">
+        UPDATE pms_brand
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="pinyin != null">
+                pinyin=#{pinyin},
+            </if>
+            <if test="logo != null">
+                logo=#{logo},
+            </if>
+            <if test="description != null">
+                description=#{description},
+            </if>
+            <if test="keywords != null">
+                keywords=#{keywords},
+            </if>
+            <if test="sort != null">
+                sort=#{sort},
+            </if>
+            <if test="description != null">
+                description=#{description},
+            </if>
+            <if test="sales != null">
+                sales=#{sales},
+            </if>
+            <if test="product_count != null">
+                product_count=#{product_count},
+            </if>
+            <if test="comment_count != null">
+                comment_count=#{comment_count},
+            </if>
+            <if test="positive_comment_count != null">
+                positive_comment_count=#{positive_comment_count},
+            </if>
+            <if test="enable != null">
+                enable=#{enable},
+            </if>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+<!--    int countByName(String name);-->
+    <select id="countByName" resultType="int">
+        SELECT count(*) FROM pms_brand WHERE name = #{name}
+    </select>
+
+<!--    BrandStrandardVO getBandStrandardById(Long id);-->
+    <select id="getBandStrandardById" resultMap="brandStrandardVO" >
+        SELECT
+            id,name, pinyin, logo, description, keywords, sort, sales, product_count, comment_count, positive_comment_count, enable
+        FROM
+             pms_brand
+        where id=#{id}
+    </select>
+    <!-- List<AlbumListItemVO> list(); -->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        pms_brand
+        ORDER BY
+        sort DESC, id DESC
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id,name, pinyin, logo, description, keywords, sort, sales, product_count, comment_count, positive_comment_count, enable
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap" type="cn.ykd.store.system.pojo.vo.BrandlistitemVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="pinyin" property="pinyin"/>
+        <result column="logo" property="logo"/>
+        <result column="description" property="description"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+        <result column="sales" property="sales"/>
+        <result column="product_count" property="product_count"/>
+        <result column="comment_count" property="comment_count"/>
+        <result column="positive_comment_count" property="positive_comment_count"/>
+        <result column="enable" property="enable"/>
+
+
+
+    </resultMap>
+</mapper>
+
